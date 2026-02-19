@@ -8,7 +8,68 @@ const success = <T>(data: T) => HttpResponse.json({ ok: true, data });
 const error = (message: string, status = 400) =>
   HttpResponse.json({ ok: false, error: { message } }, { status });
 
+// 목업 사용자 데이터
+const mockUsers = [
+  { id: 'user_1', email: 'test@example.com', password: 'password123', name: '테스트 사용자' },
+  { id: 'user_2', email: 'user@aileader.dev', password: '123456', name: '일반 사용자' },
+];
+
 export const handlers = [
+  // ==================== Auth ====================
+
+  // POST /api/auth/login - 로그인
+  http.post('/api/auth/login', async ({ request }) => {
+    await delay(500);
+    const body = (await request.json()) as { email: string; password: string };
+    
+    const user = mockUsers.find(
+      (u) => u.email === body.email && u.password === body.password
+    );
+    
+    if (!user) {
+      return error('이메일 또는 비밀번호가 올바르지 않습니다', 401);
+    }
+
+    return success({
+      user: { id: user.id, email: user.email, name: user.name },
+      token: `mock-token-${user.id}-${Date.now()}`,
+    });
+  }),
+
+  // POST /api/auth/signup - 회원가입
+  http.post('/api/auth/signup', async ({ request }) => {
+    await delay(500);
+    const body = (await request.json()) as { name: string; email: string; password: string };
+    
+    const exists = mockUsers.find((u) => u.email === body.email);
+    if (exists) {
+      return error('이미 가입된 이메일입니다', 400);
+    }
+
+    const newUser = {
+      id: `user_${Date.now()}`,
+      email: body.email,
+      password: body.password,
+      name: body.name,
+    };
+    mockUsers.push(newUser);
+
+    return success({ message: '회원가입이 완료되었습니다' });
+  }),
+
+  // POST /api/auth/logout - 로그아웃
+  http.post('/api/auth/logout', async () => {
+    await delay(200);
+    return success({ message: '로그아웃되었습니다' });
+  }),
+
+  // GET /api/auth/me - 현재 사용자 정보
+  http.get('/api/auth/me', async () => {
+    await delay(200);
+    // 기본적으로 로그인된 사용자 반환 (localStorage 기반 인증이므로)
+    return success(mockUsers[0]);
+  }),
+
   // ==================== Cars ====================
   
   // GET /api/cars - 차량 목록 조회
