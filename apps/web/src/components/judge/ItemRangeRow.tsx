@@ -11,6 +11,16 @@ interface ItemRangeRowProps {
 export function ItemRangeRow({ item }: ItemRangeRowProps) {
   const { fairMin, fairMax, myPrice, positionPct } = item;
 
+  // 평균값 계산 및 차이 퍼센트
+  const avgPrice = (fairMin + fairMax) / 2;
+  const diffPercent = avgPrice > 0 ? Math.round(((myPrice - avgPrice) / avgPrice) * 100) : 0;
+  const diffSign = diffPercent > 0 ? '+' : '';
+  const diffColorClass = diffPercent > 20 
+    ? 'text-excessive' 
+    : diffPercent > 0 
+      ? 'text-caution' 
+      : 'text-fair';
+
   // 화면 표시용 범위 계산 (fairMin~fairMax*1.5 사이)
   const displayMax = fairMax * 1.5;
   const displayMin = Math.max(0, fairMin * 0.5);
@@ -42,9 +52,26 @@ export function ItemRangeRow({ item }: ItemRangeRowProps) {
           )}
         </div>
         <div className="flex items-center gap-2 flex-shrink-0 ml-3">
-          <span className="text-sm font-semibold text-gray-900">{formatKRW(myPrice)}</span>
+          <div className="text-right">
+            <span className="text-sm font-semibold text-gray-900">{formatKRW(myPrice)}</span>
+            {diffPercent !== 0 && (
+              <span className={`ml-1.5 text-xs font-medium ${diffColorClass}`}>
+                ({diffSign}{diffPercent}%)
+              </span>
+            )}
+          </div>
           <Badge variant={item.resultLabel} />
         </div>
+      </div>
+
+      {/* 평균가 안내 */}
+      <div className="flex items-center gap-2 mb-2 text-xs text-gray-500">
+        <span>평균가: {formatKRW(avgPrice)}</span>
+        {diffPercent !== 0 && (
+          <span className={diffColorClass}>
+            {diffPercent > 0 ? '평균보다 높음' : '평균보다 낮음'}
+          </span>
+        )}
       </div>
 
       {/* 범위 바 */}

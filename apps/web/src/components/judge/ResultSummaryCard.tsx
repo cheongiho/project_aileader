@@ -1,6 +1,7 @@
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { ItemRangeRow } from './ItemRangeRow';
+import { formatKRW } from '@/lib/currency';
 import type { Judgement } from '@/api/judgements';
 
 const STATUS_CONFIG = {
@@ -37,6 +38,19 @@ export function ResultSummaryCard({ judgement }: ResultSummaryCardProps) {
 
   const config = STATUS_CONFIG[result.label];
 
+  // 전체 평균 대비 계산
+  const totalMyPrice = items.reduce((sum, item) => sum + item.myPrice, 0);
+  const totalAvgPrice = items.reduce((sum, item) => sum + (item.fairMin + item.fairMax) / 2, 0);
+  const totalDiffPercent = totalAvgPrice > 0 
+    ? Math.round(((totalMyPrice - totalAvgPrice) / totalAvgPrice) * 100) 
+    : 0;
+  const totalDiffSign = totalDiffPercent > 0 ? '+' : '';
+  const totalDiffColorClass = totalDiffPercent > 20 
+    ? 'text-excessive' 
+    : totalDiffPercent > 0 
+      ? 'text-caution' 
+      : 'text-fair';
+
   return (
     <div className="space-y-4">
       {/* 전체 결과 헤더 카드 */}
@@ -55,6 +69,32 @@ export function ResultSummaryCard({ judgement }: ResultSummaryCardProps) {
         <p className="mt-2 text-sm text-gray-600 max-w-xs mx-auto leading-relaxed">
           {result.summary}
         </p>
+
+        {/* 평균 대비 총합 비교 */}
+        {items.length > 0 && totalAvgPrice > 0 && (
+          <div className="mt-4 pt-4 border-t border-gray-200/50">
+            <div className="flex justify-center items-center gap-4 text-sm">
+              <div>
+                <span className="text-gray-500">평균가 합계</span>
+                <p className="font-semibold text-gray-700">{formatKRW(totalAvgPrice)}</p>
+              </div>
+              <div className={`text-2xl font-bold ${totalDiffColorClass}`}>
+                {totalDiffSign}{totalDiffPercent}%
+              </div>
+              <div>
+                <span className="text-gray-500">내 견적 합계</span>
+                <p className="font-semibold text-gray-900">{formatKRW(totalMyPrice)}</p>
+              </div>
+            </div>
+            <p className={`mt-2 text-xs ${totalDiffColorClass}`}>
+              {totalDiffPercent > 0 
+                ? `평균보다 ${formatKRW(totalMyPrice - totalAvgPrice)} 높습니다` 
+                : totalDiffPercent < 0 
+                  ? `평균보다 ${formatKRW(totalAvgPrice - totalMyPrice)} 낮습니다`
+                  : '평균과 동일합니다'}
+            </p>
+          </div>
+        )}
 
         {/* confidence */}
         <div className="mt-4 text-xs text-gray-400">
