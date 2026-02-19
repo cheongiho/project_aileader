@@ -1,5 +1,5 @@
 {
-  "buildCommand": "pnpm install && pnpm run build",
+  "buildCommand": "pnpm run build",
   "outputDirectory": "apps/web/dist"
 }</content>
 <parameter name="filePath">d:\project_aileader\vercel.json
