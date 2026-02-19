@@ -1,0 +1,12 @@
+{
+  "buildCommand": "pnpm run build",
+  "devCommand": "pnpm run dev",
+  "installCommand": "pnpm install",
+  "framework": null,
+  "outputDirectory": "apps/web/dist",
+  "env": {
+    "VITE_API_URL": "https://your-api-url.vercel.app",
+    "VITE_USER_ID": "user_1"
+  }
+}</content>
+<parameter name="filePath">d:\project_aileader\vercel.json
