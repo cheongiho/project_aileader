@@ -24,6 +24,7 @@ async function main() {
     origin: [
       'http://localhost:5173',
       'http://localhost:3000',
+      'https://project-aileader-55m05huuc-gihos-projects-53d5462b.vercel.app',
     ],
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'x-user-id'],
@@ -72,10 +73,15 @@ async function main() {
   await app.register(judgementsRoutes);
   await app.register(meRoutes);
 
-  const port = parseInt(process.env.PORT ?? '3001', 10);
-  await app.listen({ port, host: '0.0.0.0' });
+  // For Vercel deployment
+  await app.register(require('@fastify/express'));
+  await app.ready();
 
-  console.log(`
+  const port = parseInt(process.env.PORT ?? '3001', 10);
+  if (require.main === module) {
+    await app.listen({ port, host: '0.0.0.0' });
+
+    console.log(`
   ====================================
   AI Leader API 실행 중
   ====================================
@@ -84,9 +90,15 @@ async function main() {
   Health:   http://localhost:${port}/health
   ====================================
   `);
-}
+  }
+
+  // Export for Vercel
+  export default app;
 
 main().catch((err) => {
   console.error('서버 시작 실패:', err);
   process.exit(1);
 });
+
+// Export for Vercel
+export default app;
