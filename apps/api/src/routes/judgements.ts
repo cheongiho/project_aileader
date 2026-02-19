@@ -38,12 +38,12 @@ judgementsRouter.post('/api/judgements', async (req: Request, res: Response, nex
         estimateId,
         version,
         status: 'done',
-        resultLabel: result.label,
+        resultLabel: result.resultLabel,
         confidence: result.confidence,
         summary: result.summary,
         items: {
           create: result.items.map((item) => ({
-            estimateItemId: item.itemId,
+            estimateItemId: item.estimateItemId,
             fairMin: item.fairMin,
             fairMax: item.fairMax,
             myPrice: item.myPrice,
