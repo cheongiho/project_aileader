@@ -1,4 +1,9 @@
 {
   "buildCommand": "pnpm install --force && pnpm --filter @aileader/api run build && pnpm --filter @aileader/web run build",
-  "outputDirectory": "apps/web/dist"
+  "outputDirectory": "apps/web/dist",
+  "functions": {
+    "api/index.ts": {
+      "runtime": "@vercel/node@18"
+    }
+  }
 }
