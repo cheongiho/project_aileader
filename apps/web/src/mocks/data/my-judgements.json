@@ -1,0 +1,65 @@
+[
+  {
+    "id": "jdg-001",
+    "estimateId": "est-001",
+    "version": 1,
+    "status": "done",
+    "result": {
+      "label": "FAIR",
+      "confidence": 0.92,
+      "summary": "전반적으로 시세에 맞는 적정 견적입니다.",
+      "badges": ["투명한 견적"]
+    },
+    "items": [],
+    "car": {
+      "make": "현대",
+      "model": "아반떼",
+      "year": 2021
+    },
+    "shopName": "현대 공식 서비스센터",
+    "totalAmount": 850000,
+    "createdAt": "2026-02-10T10:35:00.000Z"
+  },
+  {
+    "id": "jdg-002",
+    "estimateId": "est-002",
+    "version": 1,
+    "status": "done",
+    "result": {
+      "label": "CAUTION",
+      "confidence": 0.78,
+      "summary": "일부 항목에서 시세보다 높은 가격이 발견되었습니다.",
+      "badges": ["일부 항목 주의"]
+    },
+    "items": [],
+    "car": {
+      "make": "기아",
+      "model": "K5",
+      "year": 2022
+    },
+    "shopName": "기아 오토큐",
+    "totalAmount": 1250000,
+    "createdAt": "2026-02-15T14:25:00.000Z"
+  },
+  {
+    "id": "jdg-003",
+    "estimateId": "est-003",
+    "version": 1,
+    "status": "done",
+    "result": {
+      "label": "EXCESSIVE",
+      "confidence": 0.95,
+      "summary": "전체적으로 시세보다 과도하게 높은 견적입니다.",
+      "badges": ["과다 견적 주의"]
+    },
+    "items": [],
+    "car": {
+      "make": "쉐보레",
+      "model": "트레일블레이저",
+      "year": 2023
+    },
+    "shopName": "동네 카센터",
+    "totalAmount": 2150000,
+    "createdAt": "2026-02-18T09:50:00.000Z"
+  }
+]

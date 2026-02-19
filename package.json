@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "concurrently \"pnpm --filter @aileader/api run dev\" \"pnpm --filter @aileader/web run dev\"",
+    "dev:mock": "pnpm --filter @aileader/web run dev:mock",
     "build": "pnpm --filter @aileader/web run build",
     "lint": "eslint . --ext .ts,.tsx --ignore-path .gitignore",
     "format": "prettier --write \"**/*.{ts,tsx,json,md}\" --ignore-path .gitignore",

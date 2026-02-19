@@ -1,0 +1,356 @@
+[
+  {
+    "id": "jdg-001",
+    "estimateId": "est-001",
+    "version": 1,
+    "status": "done",
+    "result": {
+      "label": "FAIR",
+      "confidence": 0.92,
+      "summary": "전반적으로 시세에 맞는 적정 견적입니다. 모든 항목이 합리적인 가격 범위 내에 있습니다.",
+      "badges": ["투명한 견적", "정직한 정비소"]
+    },
+    "items": [
+      {
+        "itemId": "item-001",
+        "name": "엔진오일 교환",
+        "category": "ENGINE_OIL",
+        "fairMin": 80000,
+        "fairMax": 120000,
+        "myPrice": 100000,
+        "positionPct": 50,
+        "resultLabel": "FAIR",
+        "reasonTags": [],
+        "notes": "합성유 기준 적정 가격입니다."
+      },
+      {
+        "itemId": "item-002",
+        "name": "브레이크 패드 교환 (전륜)",
+        "category": "BRAKE",
+        "fairMin": 180000,
+        "fairMax": 250000,
+        "myPrice": 200000,
+        "positionPct": 29,
+        "resultLabel": "FAIR",
+        "reasonTags": [],
+        "notes": null
+      },
+      {
+        "itemId": "item-003",
+        "name": "타이어 교환 4본",
+        "category": "TIRE",
+        "fairMin": 400000,
+        "fairMax": 520000,
+        "myPrice": 440000,
+        "positionPct": 33,
+        "resultLabel": "FAIR",
+        "reasonTags": [],
+        "notes": "해당 규격 타이어 기준 적정가입니다."
+      },
+      {
+        "itemId": "item-004",
+        "name": "에어컨 필터 교환",
+        "category": "ETC",
+        "fairMin": 25000,
+        "fairMax": 45000,
+        "myPrice": 35000,
+        "positionPct": 50,
+        "resultLabel": "FAIR",
+        "reasonTags": [],
+        "notes": null
+      },
+      {
+        "itemId": "item-005",
+        "name": "와이퍼 블레이드 교환",
+        "category": "ETC",
+        "fairMin": 30000,
+        "fairMax": 50000,
+        "myPrice": 35000,
+        "positionPct": 25,
+        "resultLabel": "FAIR",
+        "reasonTags": [],
+        "notes": null
+      },
+      {
+        "itemId": "item-006",
+        "name": "냉각수 보충",
+        "category": "COOLING",
+        "fairMin": 30000,
+        "fairMax": 50000,
+        "myPrice": 40000,
+        "positionPct": 50,
+        "resultLabel": "FAIR",
+        "reasonTags": [],
+        "notes": null
+      }
+    ],
+    "car": {
+      "make": "현대",
+      "model": "아반떼",
+      "year": 2021
+    },
+    "shopName": "현대 공식 서비스센터",
+    "totalAmount": 850000,
+    "createdAt": "2026-02-10T10:35:00.000Z"
+  },
+  {
+    "id": "jdg-002",
+    "estimateId": "est-002",
+    "version": 1,
+    "status": "done",
+    "result": {
+      "label": "CAUTION",
+      "confidence": 0.78,
+      "summary": "일부 항목에서 시세보다 높은 가격이 발견되었습니다. 서스펜션 공임과 배터리 가격을 확인해보세요.",
+      "badges": ["일부 항목 주의"]
+    },
+    "items": [
+      {
+        "itemId": "item-010",
+        "name": "서스펜션 쇼바 교환 (전륜)",
+        "category": "SUSPENSION",
+        "fairMin": 350000,
+        "fairMax": 450000,
+        "myPrice": 500000,
+        "positionPct": 100,
+        "resultLabel": "CAUTION",
+        "reasonTags": ["HIGH_LABOR"],
+        "notes": "공임이 시세보다 높습니다. 다른 정비소 견적도 받아보세요."
+      },
+      {
+        "itemId": "item-011",
+        "name": "배터리 교환",
+        "category": "BATTERY",
+        "fairMin": 150000,
+        "fairMax": 200000,
+        "myPrice": 200000,
+        "positionPct": 100,
+        "resultLabel": "CAUTION",
+        "reasonTags": ["HIGH_PART_PRICE"],
+        "notes": "배터리 가격이 상한선입니다. 온라인 가격 비교를 권장합니다."
+      },
+      {
+        "itemId": "item-012",
+        "name": "브레이크 디스크 연마",
+        "category": "BRAKE",
+        "fairMin": 60000,
+        "fairMax": 100000,
+        "myPrice": 80000,
+        "positionPct": 50,
+        "resultLabel": "FAIR",
+        "reasonTags": [],
+        "notes": null
+      },
+      {
+        "itemId": "item-013",
+        "name": "엔진오일 교환",
+        "category": "ENGINE_OIL",
+        "fairMin": 100000,
+        "fairMax": 140000,
+        "myPrice": 120000,
+        "positionPct": 50,
+        "resultLabel": "FAIR",
+        "reasonTags": [],
+        "notes": null
+      },
+      {
+        "itemId": "item-014",
+        "name": "점화플러그 교환",
+        "category": "ELECTRICAL",
+        "fairMin": 100000,
+        "fairMax": 150000,
+        "myPrice": 130000,
+        "positionPct": 60,
+        "resultLabel": "FAIR",
+        "reasonTags": [],
+        "notes": null
+      },
+      {
+        "itemId": "item-015",
+        "name": "에어필터 교환",
+        "category": "ETC",
+        "fairMin": 35000,
+        "fairMax": 55000,
+        "myPrice": 45000,
+        "positionPct": 50,
+        "resultLabel": "FAIR",
+        "reasonTags": [],
+        "notes": null
+      },
+      {
+        "itemId": "item-016",
+        "name": "미션오일 교환",
+        "category": "ETC",
+        "fairMin": 150000,
+        "fairMax": 200000,
+        "myPrice": 175000,
+        "positionPct": 50,
+        "resultLabel": "FAIR",
+        "reasonTags": [],
+        "notes": null
+      }
+    ],
+    "car": {
+      "make": "기아",
+      "model": "K5",
+      "year": 2022
+    },
+    "shopName": "기아 오토큐",
+    "totalAmount": 1250000,
+    "createdAt": "2026-02-15T14:25:00.000Z"
+  },
+  {
+    "id": "jdg-003",
+    "estimateId": "est-003",
+    "version": 1,
+    "status": "done",
+    "result": {
+      "label": "EXCESSIVE",
+      "confidence": 0.95,
+      "summary": "전체적으로 시세보다 과도하게 높은 견적입니다. 특히 타이밍벨트 공임, 불필요한 추가 공임이 의심됩니다. 다른 정비소 견적을 반드시 받아보세요.",
+      "badges": ["과다 견적 주의", "추가 공임 의심"]
+    },
+    "items": [
+      {
+        "itemId": "item-020",
+        "name": "타이밍벨트 교환",
+        "category": "ENGINE_OIL",
+        "fairMin": 400000,
+        "fairMax": 500000,
+        "myPrice": 600000,
+        "positionPct": 100,
+        "resultLabel": "EXCESSIVE",
+        "reasonTags": ["HIGH_LABOR", "HIGH_PART_PRICE"],
+        "notes": "공임과 부품비 모두 시세보다 높습니다."
+      },
+      {
+        "itemId": "item-021",
+        "name": "워터펌프 교환",
+        "category": "COOLING",
+        "fairMin": 250000,
+        "fairMax": 320000,
+        "myPrice": 330000,
+        "positionPct": 100,
+        "resultLabel": "CAUTION",
+        "reasonTags": ["HIGH_LABOR"],
+        "notes": "공임이 다소 높습니다."
+      },
+      {
+        "itemId": "item-022",
+        "name": "서모스탯 교환",
+        "category": "COOLING",
+        "fairMin": 80000,
+        "fairMax": 120000,
+        "myPrice": 125000,
+        "positionPct": 100,
+        "resultLabel": "CAUTION",
+        "reasonTags": ["HIGH_LABOR"],
+        "notes": null
+      },
+      {
+        "itemId": "item-023",
+        "name": "라디에이터 호스 교환",
+        "category": "COOLING",
+        "fairMin": 100000,
+        "fairMax": 140000,
+        "myPrice": 145000,
+        "positionPct": 100,
+        "resultLabel": "CAUTION",
+        "reasonTags": ["HIGH_PART_PRICE"],
+        "notes": null
+      },
+      {
+        "itemId": "item-024",
+        "name": "냉각수 교환",
+        "category": "COOLING",
+        "fairMin": 50000,
+        "fairMax": 80000,
+        "myPrice": 80000,
+        "positionPct": 100,
+        "resultLabel": "FAIR",
+        "reasonTags": [],
+        "notes": null
+      },
+      {
+        "itemId": "item-025",
+        "name": "브레이크 패드 교환 (4륜)",
+        "category": "BRAKE",
+        "fairMin": 300000,
+        "fairMax": 400000,
+        "myPrice": 400000,
+        "positionPct": 100,
+        "resultLabel": "CAUTION",
+        "reasonTags": ["HIGH_PART_PRICE"],
+        "notes": "순정부품 기준 상한선입니다."
+      },
+      {
+        "itemId": "item-026",
+        "name": "브레이크액 교환",
+        "category": "BRAKE",
+        "fairMin": 50000,
+        "fairMax": 70000,
+        "myPrice": 70000,
+        "positionPct": 100,
+        "resultLabel": "FAIR",
+        "reasonTags": [],
+        "notes": null
+      },
+      {
+        "itemId": "item-027",
+        "name": "엔진오일 교환",
+        "category": "ENGINE_OIL",
+        "fairMin": 100000,
+        "fairMax": 140000,
+        "myPrice": 130000,
+        "positionPct": 75,
+        "resultLabel": "FAIR",
+        "reasonTags": [],
+        "notes": null
+      },
+      {
+        "itemId": "item-028",
+        "name": "오일필터 교환",
+        "category": "ENGINE_OIL",
+        "fairMin": 15000,
+        "fairMax": 30000,
+        "myPrice": 25000,
+        "positionPct": 67,
+        "resultLabel": "FAIR",
+        "reasonTags": [],
+        "notes": null
+      },
+      {
+        "itemId": "item-029",
+        "name": "점검비",
+        "category": "ETC",
+        "fairMin": 0,
+        "fairMax": 30000,
+        "myPrice": 50000,
+        "positionPct": 100,
+        "resultLabel": "EXCESSIVE",
+        "reasonTags": ["UNCLEAR_ITEM"],
+        "notes": "점검비가 과도합니다. 보통 무료이거나 3만원 이하입니다."
+      },
+      {
+        "itemId": "item-030",
+        "name": "부품 탈거 공임",
+        "category": "ETC",
+        "fairMin": 0,
+        "fairMax": 50000,
+        "myPrice": 195000,
+        "positionPct": 100,
+        "resultLabel": "EXCESSIVE",
+        "reasonTags": ["DUP_LABOR", "UNCLEAR_ITEM"],
+        "notes": "다른 작업에 이미 공임이 포함되어 있습니다. 중복 청구 의심됩니다."
+      }
+    ],
+    "car": {
+      "make": "쉐보레",
+      "model": "트레일블레이저",
+      "year": 2023
+    },
+    "shopName": "동네 카센터",
+    "totalAmount": 2150000,
+    "createdAt": "2026-02-18T09:50:00.000Z"
+  }
+]

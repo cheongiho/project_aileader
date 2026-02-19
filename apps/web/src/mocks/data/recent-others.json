@@ -1,0 +1,107 @@
+[
+  {
+    "id": "jdg-other-001",
+    "estimateId": "est-other-001",
+    "version": 1,
+    "status": "done",
+    "result": {
+      "label": "FAIR",
+      "confidence": 0.88,
+      "summary": "적정 가격의 견적입니다.",
+      "badges": ["정직한 견적"]
+    },
+    "items": [],
+    "car": {
+      "make": "르노코리아",
+      "model": "QM6",
+      "year": 2020
+    },
+    "shopName": "르노 공식 서비스센터",
+    "totalAmount": 680000,
+    "createdAt": "2026-02-19T08:30:00.000Z"
+  },
+  {
+    "id": "jdg-other-002",
+    "estimateId": "est-other-002",
+    "version": 1,
+    "status": "done",
+    "result": {
+      "label": "CAUTION",
+      "confidence": 0.72,
+      "summary": "타이어 가격이 시세보다 높습니다.",
+      "badges": ["타이어 가격 주의"]
+    },
+    "items": [],
+    "car": {
+      "make": "현대",
+      "model": "싼타페",
+      "year": 2019
+    },
+    "shopName": "타이어뱅크",
+    "totalAmount": 920000,
+    "createdAt": "2026-02-19T07:15:00.000Z"
+  },
+  {
+    "id": "jdg-other-003",
+    "estimateId": "est-other-003",
+    "version": 1,
+    "status": "done",
+    "result": {
+      "label": "EXCESSIVE",
+      "confidence": 0.91,
+      "summary": "브레이크 작업 공임이 과도합니다.",
+      "badges": ["공임 과다"]
+    },
+    "items": [],
+    "car": {
+      "make": "BMW",
+      "model": "320i",
+      "year": 2021
+    },
+    "shopName": "수입차 전문 정비소",
+    "totalAmount": 1850000,
+    "createdAt": "2026-02-19T06:00:00.000Z"
+  },
+  {
+    "id": "jdg-other-004",
+    "estimateId": "est-other-004",
+    "version": 1,
+    "status": "done",
+    "result": {
+      "label": "FAIR",
+      "confidence": 0.95,
+      "summary": "합리적인 가격입니다.",
+      "badges": ["추천 정비소"]
+    },
+    "items": [],
+    "car": {
+      "make": "기아",
+      "model": "스포티지",
+      "year": 2022
+    },
+    "shopName": "기아 서비스센터",
+    "totalAmount": 450000,
+    "createdAt": "2026-02-18T22:00:00.000Z"
+  },
+  {
+    "id": "jdg-other-005",
+    "estimateId": "est-other-005",
+    "version": 1,
+    "status": "done",
+    "result": {
+      "label": "CAUTION",
+      "confidence": 0.68,
+      "summary": "에어컨 수리비가 높은 편입니다.",
+      "badges": ["에어컨 가격 확인"]
+    },
+    "items": [],
+    "car": {
+      "make": "쌍용",
+      "model": "토레스",
+      "year": 2023
+    },
+    "shopName": "에어컨 전문점",
+    "totalAmount": 780000,
+    "createdAt": "2026-02-18T20:30:00.000Z"
+  }
+]
