@@ -2,7 +2,6 @@
   "buildCommand": "pnpm install && pnpm --filter @aileader/shared build && pnpm --filter @aileader/api exec prisma generate",
   "functions": {
     "api/index.ts": {
-      "runtime": "nodejs20.x",
       "includeFiles": "apps/api/**,packages/shared/**"
     }
   },
