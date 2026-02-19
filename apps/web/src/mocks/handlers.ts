@@ -1,6 +1,7 @@
 import { http, HttpResponse, delay } from 'msw';
 import { mockStore } from './store';
 import shopsData from './data/shops.json';
+import allCasesData from './data/all-cases.json';
 
 // API 응답 형식 맞추기
 const success = <T>(data: T) => HttpResponse.json({ ok: true, data });
@@ -204,5 +205,53 @@ export const handlers = [
       return error('정비소를 찾을 수 없습니다.', 404);
     }
     return success(shop);
+  }),
+
+  // ==================== All Cases ====================
+
+  // GET /api/cases - 전체 판단 사례 조회
+  http.get('/api/cases', async ({ request }) => {
+    await delay(300);
+    const url = new URL(request.url);
+    const resultLabel = url.searchParams.get('resultLabel'); // FAIR | CAUTION | EXCESSIVE
+    const category = url.searchParams.get('category');
+    const limit = parseInt(url.searchParams.get('limit') || '20', 10);
+    const offset = parseInt(url.searchParams.get('offset') || '0', 10);
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let cases = [...allCasesData] as any[];
+
+    // 결과 라벨 필터링
+    if (resultLabel) {
+      cases = cases.filter((c) => c.result.label === resultLabel);
+    }
+
+    // 카테고리 필터링
+    if (category) {
+      cases = cases.filter((c) => c.mainCategory === category);
+    }
+
+    // 통계 계산
+    const stats = {
+      total: allCasesData.length,
+      fair: allCasesData.filter((c) => c.result.label === 'FAIR').length,
+      caution: allCasesData.filter((c) => c.result.label === 'CAUTION').length,
+      excessive: allCasesData.filter((c) => c.result.label === 'EXCESSIVE').length,
+    };
+
+    // 페이지네이션
+    const total = cases.length;
+    const paginatedCases = cases.slice(offset, offset + limit);
+
+    return success({
+      cases: paginatedCases,
+      stats,
+      pagination: {
+        total,
+        limit,
+        offset,
+        hasMore: offset + limit < total,
+      },
+    });
   }),
 ];

@@ -10,6 +10,7 @@ import { MyJudgements } from '@/routes/my/MyJudgements';
 import { MyCars } from '@/routes/my/MyCars';
 import { Guide } from '@/routes/guide/Guide';
 import { NearbyShops } from '@/routes/shops/NearbyShops';
+import { AllCases } from '@/routes/cases/AllCases';
 import { DevUI } from '@/routes/dev/DevUI';
 
 export function App() {
@@ -43,6 +44,9 @@ export function App() {
 
                 {/* Shops */}
                 <Route path="/shops" element={<NearbyShops />} />
+
+                {/* Cases */}
+                <Route path="/cases" element={<AllCases />} />
 
                 {/* Fallback */}
                 <Route path="*" element={<Navigate to="/" replace />} />

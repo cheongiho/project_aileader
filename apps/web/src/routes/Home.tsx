@@ -109,6 +109,25 @@ export function Home() {
           </div>
         )}
       </section>
+
+      {/* 전체 판단 사례 바로가기 */}
+      <section className="mt-8">
+        <Link to="/cases">
+          <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 hover:shadow-card-hover transition-shadow cursor-pointer">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-base font-semibold text-gray-900">
+                  👥 다른 사람들의 판단 사례
+                </h3>
+                <p className="text-sm text-gray-500 mt-1">
+                  다양한 정비 견적 판단 결과를 확인하고 참고하세요
+                </p>
+              </div>
+              <span className="text-xl text-gray-400">→</span>
+            </div>
+          </Card>
+        </Link>
+      </section>
     </div>
   );
 }
