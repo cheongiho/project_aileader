@@ -5,7 +5,6 @@ import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { EmptyState } from '@/components/ui/EmptyState';
-import { ErrorState } from '@/components/ui/ErrorState';
 import { formatKRW } from '@/lib/currency';
 import type { Judgement } from '@/api/judgements';
 
@@ -61,14 +60,12 @@ function JudgementCard({ judgement: j, isMine }: JudgementCardProps) {
 }
 
 export function MyJudgements() {
-  const { data: myJudgements, isLoading: myLoading, error: myError, refetch: refetchMine } = useMyJudgements();
-  const { data: othersJudgements, isLoading: othersLoading, error: othersError } = useRecentOthersJudgements(10);
+  const { data: myJudgements, isLoading: myLoading } = useMyJudgements();
+  const { data: othersJudgements, isLoading: othersLoading } = useRecentOthersJudgements(10);
 
   const isLoading = myLoading || othersLoading;
-  const hasError = myError || othersError;
 
   if (isLoading) return <div className="max-w-6xl mx-auto"><Skeleton lines={4} /></div>;
-  if (hasError) return <ErrorState message="판단 이력을 불러오지 못했습니다" onRetry={refetchMine} />;
 
   return (
     <div className="max-w-6xl mx-auto">
