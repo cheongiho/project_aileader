@@ -174,7 +174,7 @@ export function DevUI() {
               { value: 'BATTERY', label: '🔋 배터리' },
             ]}
             value={selectValue}
-            onChange={setSelectValue}
+            onChange={(e) => setSelectValue(e.target.value)}
           />
         </div>
       </Section>
