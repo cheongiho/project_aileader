@@ -4,6 +4,7 @@ import { cn } from '@/lib/cn';
 const TABS = [
   { to: '/', label: '홈', icon: '🏠', end: true },
   { to: '/judge/new', label: '판단', icon: '🔍', end: false },
+  { to: '/shops', label: '정비소', icon: '📍', end: false },
   { to: '/guide', label: '가이드', icon: '📖', end: false },
   { to: '/my/judgements', label: '마이', icon: '👤', end: false },
 ];

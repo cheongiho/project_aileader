@@ -1,5 +1,6 @@
 import { http, HttpResponse, delay } from 'msw';
 import { mockStore } from './store';
+import shopsData from './data/shops.json';
 
 // API 응답 형식 맞추기
 const success = <T>(data: T) => HttpResponse.json({ ok: true, data });
@@ -155,5 +156,53 @@ export const handlers = [
   
   http.get('/api/health', () => {
     return success({ status: 'ok', mock: true });
+  }),
+
+  // ==================== Shops ====================
+
+  // GET /api/shops - 정비소 목록 조회
+  http.get('/api/shops', async ({ request }) => {
+    await delay(300);
+    const url = new URL(request.url);
+    const lat = parseFloat(url.searchParams.get('lat') || '37.4979');
+    const lng = parseFloat(url.searchParams.get('lng') || '127.0276');
+    const limit = parseInt(url.searchParams.get('limit') || '20', 10);
+    const type = url.searchParams.get('type'); // official | franchise | private
+
+    let shops = [...shopsData];
+
+    // 타입 필터링
+    if (type) {
+      shops = shops.filter((shop) => shop.type === type);
+    }
+
+    // 거리 계산 및 정렬
+    const R = 6371;
+    const shopsWithDistance = shops.map((shop) => {
+      const dLat = ((shop.lat - lat) * Math.PI) / 180;
+      const dLng = ((shop.lng - lng) * Math.PI) / 180;
+      const a =
+        Math.sin(dLat / 2) ** 2 +
+        Math.cos((lat * Math.PI) / 180) *
+          Math.cos((shop.lat * Math.PI) / 180) *
+          Math.sin(dLng / 2) ** 2;
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      const distance = R * c;
+      return { ...shop, distance };
+    });
+
+    shopsWithDistance.sort((a, b) => a.distance - b.distance);
+
+    return success(shopsWithDistance.slice(0, limit));
+  }),
+
+  // GET /api/shops/:id - 정비소 상세 조회
+  http.get('/api/shops/:id', async ({ params }) => {
+    await delay(200);
+    const shop = shopsData.find((s) => s.id === params.id);
+    if (!shop) {
+      return error('정비소를 찾을 수 없습니다.', 404);
+    }
+    return success(shop);
   }),
 ];

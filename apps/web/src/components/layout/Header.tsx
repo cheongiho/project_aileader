@@ -4,6 +4,7 @@ import { cn } from '@/lib/cn';
 const NAV_LINKS = [
   { to: '/', label: '홈', end: true },
   { to: '/judge/new', label: '판단하기', end: false },
+  { to: '/shops', label: '정비소', end: false },
   { to: '/guide', label: '가이드', end: false },
   { to: '/my/judgements', label: '마이', end: false },
 ];
