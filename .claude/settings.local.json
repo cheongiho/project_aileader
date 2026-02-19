@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir:*)",
+      "Bash(node:*)",
+      "Bash(npm:*)",
+      "Bash(where:*)",
+      "Bash(cmd /c:*)"
+    ]
+  }
+}

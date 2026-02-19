@@ -1,0 +1,141 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+
+model User {
+  id          String       @id @default(uuid())
+  name        String?
+  email       String?      @unique
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
+  carProfiles CarProfile[]
+  estimates   Estimate[]
+
+  @@map("users")
+}
+
+model CarProfile {
+  id        String     @id @default(uuid())
+  userId    String     @map("user_id")
+  make      String
+  model     String
+  year      Int
+  plateNo   String?    @map("plate_no")
+  createdAt DateTime   @default(now()) @map("created_at")
+
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  estimates Estimate[]
+
+  @@map("car_profiles")
+}
+
+enum EstimateSource {
+  manual
+  photo
+}
+
+enum EstimateStatus {
+  draft
+  submitted
+}
+
+model Estimate {
+  id          String         @id @default(uuid())
+  userId      String?        @map("user_id")
+  carId       String?        @map("car_id")
+  source      EstimateSource @default(manual)
+  status      EstimateStatus @default(draft)
+  shopName    String?        @map("shop_name")
+  totalAmount Int            @default(0) @map("total_amount")
+  createdAt   DateTime       @default(now()) @map("created_at")
+  updatedAt   DateTime       @updatedAt @map("updated_at")
+
+  user       User?          @relation(fields: [userId], references: [id])
+  car        CarProfile?    @relation(fields: [carId], references: [id])
+  items      EstimateItem[]
+  judgements Judgement[]
+
+  @@map("estimates")
+}
+
+model EstimateItem {
+  id         String   @id @default(uuid())
+  estimateId String   @map("estimate_id")
+  name       String
+  category   String
+  laborCost  Int      @default(0) @map("labor_cost")
+  partsCost  Int      @default(0) @map("parts_cost")
+  totalCost  Int      @map("total_cost")
+  note       String?
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  estimate       Estimate        @relation(fields: [estimateId], references: [id], onDelete: Cascade)
+  judgementItems JudgementItem[]
+
+  @@map("estimate_items")
+}
+
+enum JudgementStatus {
+  queued
+  done
+  failed
+}
+
+enum ResultLabel {
+  FAIR
+  CAUTION
+  EXCESSIVE
+}
+
+model Judgement {
+  id          String          @id @default(uuid())
+  estimateId  String          @map("estimate_id")
+  version     Int             @default(1)
+  status      JudgementStatus @default(queued)
+  resultLabel ResultLabel?    @map("result_label")
+  confidence  Float?
+  overallScore Int?           @map("overall_score")
+  summary     String?
+  createdAt   DateTime        @default(now()) @map("created_at")
+
+  estimate  Estimate        @relation(fields: [estimateId], references: [id])
+  items     JudgementItem[]
+  feedbacks Feedback[]
+
+  @@map("judgements")
+}
+
+model JudgementItem {
+  id             String      @id @default(uuid())
+  judgementId    String      @map("judgement_id")
+  estimateItemId String      @map("estimate_item_id")
+  fairMin        Int         @map("fair_min")
+  fairMax        Int         @map("fair_max")
+  myPrice        Int         @map("my_price")
+  positionPct    Float       @map("position_pct")
+  resultLabel    ResultLabel @map("result_label")
+  reasonTags     String[]    @map("reason_tags")
+  notes          String?
+
+  judgement    Judgement    @relation(fields: [judgementId], references: [id], onDelete: Cascade)
+  estimateItem EstimateItem @relation(fields: [estimateItemId], references: [id])
+
+  @@map("judgement_items")
+}
+
+model Feedback {
+  id          String    @id @default(uuid())
+  judgementId String    @map("judgement_id")
+  rating      Int
+  comment     String?
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  judgement Judgement @relation(fields: [judgementId], references: [id], onDelete: Cascade)
+
+  @@map("feedbacks")
+}
