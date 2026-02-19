@@ -1,26 +1,26 @@
 import 'dotenv/config';
-import Fastify from 'fastify';
-import cors from '@fastify/cors';
-import swagger from '@fastify/swagger';
-import swaggerUi from '@fastify/swagger-ui';
+import express from 'express';
+import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
+import swaggerJsdoc from 'swagger-jsdoc';
 
-import authPlugin from './middleware/auth';
-import { registerErrorHandler } from './middleware/error';
-import { healthRoutes } from './routes/health';
-import { carsRoutes } from './routes/cars';
-import { estimatesRoutes } from './routes/estimates';
-import { judgementsRoutes } from './routes/judgements';
-import { meRoutes } from './routes/me';
+import { authMiddleware } from './middleware/auth';
+import { errorHandler } from './middleware/error';
+import { healthRouter } from './routes/health';
+import { carsRouter } from './routes/cars';
+import { estimatesRouter } from './routes/estimates';
+import { judgementsRouter } from './routes/judgements';
+import { meRouter } from './routes/me';
 
-const app = Fastify({
-  logger: {
-    level: process.env.NODE_ENV === 'development' ? 'info' : 'warn',
-  },
-});
+const app = express();
 
-async function main() {
-  // CORS
-  await app.register(cors, {
+// Body parser
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// CORS
+app.use(
+  cors({
     origin: [
       'http://localhost:5173',
       'http://localhost:3000',
@@ -28,59 +28,49 @@ async function main() {
     ],
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'x-user-id'],
-  });
+  })
+);
 
-  // OpenAPI
-  await app.register(swagger, {
-    openapi: {
-      info: {
-        title: 'AI Leader API',
-        description: '차량 정비 견적 적정 범위 판단 서비스 API (v1)',
-        version: '1.0.0',
-      },
-      components: {
-        securitySchemes: {
-          userId: {
-            type: 'apiKey',
-            in: 'header',
-            name: 'x-user-id',
-            description: '개발용 사용자 ID (예: user_1)',
-          },
+// OpenAPI / Swagger
+const swaggerSpec = swaggerJsdoc({
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'AI Leader API',
+      description: '차량 정비 견적 적정 범위 판단 서비스 API (v1)',
+      version: '1.0.0',
+    },
+    components: {
+      securitySchemes: {
+        userId: {
+          type: 'apiKey',
+          in: 'header',
+          name: 'x-user-id',
+          description: '개발용 사용자 ID (예: user_1)',
         },
       },
     },
-  });
+  },
+  apis: ['./src/routes/*.ts'],
+});
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-  await app.register(swaggerUi, {
-    routePrefix: '/docs',
-    uiConfig: {
-      docExpansion: 'list',
-      deepLinking: false,
-    },
-    staticCSP: true,
-  });
+// 인증 미들웨어
+app.use(authMiddleware);
 
-  // 에러 핸들러
-  registerErrorHandler(app);
+// 라우트 등록
+app.use(healthRouter);
+app.use(carsRouter);
+app.use(estimatesRouter);
+app.use(judgementsRouter);
+app.use(meRouter);
 
-  // 인증 플러그인
-  await app.register(authPlugin);
+// 에러 핸들러 (반드시 라우트 뒤에 등록)
+app.use(errorHandler);
 
-  // 라우트 등록
-  await app.register(healthRoutes);
-  await app.register(carsRoutes);
-  await app.register(estimatesRoutes);
-  await app.register(judgementsRoutes);
-  await app.register(meRoutes);
-
-  // For Vercel deployment
-  await app.register(require('@fastify/express'));
-  await app.ready();
-
-  const port = parseInt(process.env.PORT ?? '3001', 10);
-  if (require.main === module) {
-    await app.listen({ port, host: '0.0.0.0' });
-
+const port = parseInt(process.env.PORT ?? '3001', 10);
+if (require.main === module) {
+  app.listen(port, '0.0.0.0', () => {
     console.log(`
   ====================================
   AI Leader API 실행 중
@@ -89,16 +79,9 @@ async function main() {
   Docs:     http://localhost:${port}/docs
   Health:   http://localhost:${port}/health
   ====================================
-  `);
-  }
-
-  // Export for Vercel
-  export default app;
-
-main().catch((err) => {
-  console.error('서버 시작 실패:', err);
-  process.exit(1);
-});
+    `);
+  });
+}
 
 // Export for Vercel
 export default app;

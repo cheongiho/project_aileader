@@ -1,27 +1,27 @@
-import { FastifyRequest, FastifyReply, FastifyInstance } from 'fastify';
-import fp from 'fastify-plugin';
+import { Request, Response, NextFunction } from 'express';
 import { prisma } from '../db/client';
 
-declare module 'fastify' {
-  interface FastifyRequest {
-    userId: string;
+// Express에 userId 속성 추가
+declare global {
+  namespace Express {
+    interface Request {
+      userId: string;
+    }
   }
 }
 
-async function authPlugin(app: FastifyInstance) {
-  app.decorateRequest('userId', '');
+export async function authMiddleware(req: Request, res: Response, next: NextFunction) {
+  // /health와 /docs는 인증 불필요
+  if (
+    req.path === '/health' ||
+    req.path.startsWith('/docs') ||
+    req.path.startsWith('/documentation')
+  ) {
+    return next();
+  }
 
-  app.addHook('preHandler', async (request: FastifyRequest, reply: FastifyReply) => {
-    // /health와 /docs는 인증 불필요
-    if (
-      request.url === '/health' ||
-      request.url.startsWith('/docs') ||
-      request.url.startsWith('/documentation')
-    ) {
-      return;
-    }
-
-    const userId = request.headers['x-user-id'] as string | undefined;
+  try {
+    const userId = req.headers['x-user-id'] as string | undefined;
 
     if (!userId) {
       // 개발 편의: x-user-id 없으면 기본 사용자 사용
@@ -34,8 +34,8 @@ async function authPlugin(app: FastifyInstance) {
           name: '기본 사용자',
         },
       });
-      request.userId = defaultUser.id;
-      return;
+      req.userId = defaultUser.id;
+      return next();
     }
 
     // userId로 User upsert (개발용: 자동 생성)
@@ -49,8 +49,9 @@ async function authPlugin(app: FastifyInstance) {
       },
     });
 
-    request.userId = user.id;
-  });
+    req.userId = user.id;
+    next();
+  } catch (err) {
+    next(err);
+  }
 }
-
-export default fp(authPlugin);

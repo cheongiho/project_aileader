@@ -1,26 +1,10 @@
-import { FastifyInstance } from 'fastify';
+import { Router, Request, Response } from 'express';
 
-export async function healthRoutes(app: FastifyInstance) {
-  app.get(
-    '/health',
-    {
-      schema: {
-        tags: ['System'],
-        summary: '헬스체크',
-        response: {
-          200: {
-            type: 'object',
-            properties: {
-              status: { type: 'string' },
-              timestamp: { type: 'string' },
-            },
-          },
-        },
-      },
-    },
-    async () => ({
-      status: 'ok',
-      timestamp: new Date().toISOString(),
-    })
-  );
-}
+export const healthRouter = Router();
+
+healthRouter.get('/health', (_req: Request, res: Response) => {
+  res.json({
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+  });
+});
