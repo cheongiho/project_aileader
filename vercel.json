@@ -1,5 +1,6 @@
 {
-  "buildCommand": "pnpm install && pnpm --filter @aileader/shared build && pnpm --filter @aileader/api exec prisma generate",
+  "buildCommand": "pnpm install && pnpm --filter @aileader/shared build && pnpm --filter @aileader/api exec prisma generate && pnpm --filter @aileader/web build",
+  "outputDirectory": "apps/web/dist",
   "functions": {
     "api/index.ts": {
       "includeFiles": "apps/api/**,packages/shared/**"
